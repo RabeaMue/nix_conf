@@ -6,24 +6,39 @@
 
 { config, pkgs, ... }:
 
-{
+let
+  # KUF: This setup make the use of the release explicit in the config (pinning nixpkgs).
+  # This setup also allows to use stable and unstable in parallel.
+  # - https://discourse.nixos.org/t/installing-only-a-single-package-from-unstable/5598/2
+  # - https://nix.dev/reference/pinning-nixpkgs.html
+  pkgs = import (builtins.fetchTarball("channel:nixos-20.09")) { config = { allowUnfree = true; }; };
+  unstable = import (builtins.fetchTarball("channel:nixos-unstable")) { config = { allowUnfree = true; }; };
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-    ];  
+    ];
+
+
+# {
+#   imports =
+#     [ # Include the results of the hardware scan.
+#       ./hardware-configuration.nix
+#     ];  
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  
   # Always use the newest kernel
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # detect Mic
-  # boot.kernelParams = ["snd_hda_intel.dmic_detect=0"];
-  #boot.kernelParams = ["snd-intel-dspcfg.dsp_driver=1"];
-  
+  #  boot.kernelParams = ["snd_hda_intel.dmic_detect=0"];
+     boot.kernelParams = ["snd-intel-dspcfg.dsp_driver=1"];
+     boot.extraModprobeConfig = "options snd slots=,snd_usb_audio";
+     
    networking.hostName = "persephone"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -106,13 +121,14 @@
 	gparted
 	chromium 
 	emacs 
-	zoom-us 
+	unstable.zoom-us 
 	gnome3.cheese
 	restic
 	networkmanager
 	networkmanagerapplet
 	git
-
+	unstable.pulseaudio
+	unstable.sof-firmware
 ];
 
   # Some programs need SUID wrappers, can be configured further or are
