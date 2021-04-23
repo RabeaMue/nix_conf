@@ -16,7 +16,14 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Always use the newest kernel
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # detect Mic
+  # boot.kernelParams = ["snd_hda_intel.dmic_detect=0"];
+  #boot.kernelParams = ["snd-intel-dspcfg.dsp_driver=1"];
+  
    networking.hostName = "persephone"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -42,29 +49,24 @@
   # };
 
   # Enable the GNOME 3 Desktop Environment.
-   services.xserver.enable = true;
-   services.xserver.displayManager.gdm.enable = true;
-   services.xserver.desktopManager.gnome3.enable = true;
+  # services.xserver.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome3.enable = true;
 
-#  services.xserver = {
- #   enable = true;
-  #  autorun = true;
-  #  layout = "de";
+  services.fwupd.enable = true;
 
-  #  desktopManager = {
-  #    xterm.enable = false;
-  #  };
+  services = {
+  xserver = {
+    enable = true;
+    layout = "de";
+    displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = false;
+    desktopManager.gnome3.enable = true;
+  };
 
-  #  displayManager = {
-   #     defaultSession = "none+i3";
-   #     lightdm.enable = true;
-   # };
-
-   # windowManager.i3 = {
-   #   enable = true;
-#    };
-#};
-  
+  dbus.packages = [ pkgs.gnome3.dconf ];
+  udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
+};
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -109,6 +111,7 @@
 	restic
 	networkmanager
 	networkmanagerapplet
+	git
 
 ];
 
