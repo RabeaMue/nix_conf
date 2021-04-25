@@ -1,1 +1,3 @@
 # Nix configuration
+
+- Rabea Müller
