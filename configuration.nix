@@ -116,19 +116,42 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
    environment.systemPackages = with pkgs; [
-     	wget vim 
-     	firefox
-	gparted
-	chromium 
-	emacs 
-	unstable.zoom-us 
-	gnome3.cheese
-	restic
-	networkmanager
-	networkmanagerapplet
-	git
-	unstable.pulseaudio
-	unstable.sof-firmware
+
+   git
+   firefox
+   chromium
+
+   emacs
+   wget vim 
+
+
+   gparted
+    
+   unstable.zoom-us 
+   gnome3.cheese
+   restic
+
+   networkmanager
+   networkmanagerapplet
+
+
+   python38
+   python38Packages.python-gitlab
+   python38Packages.jupyter
+   python38Packages.jupyter_core
+   jupyter
+   python38Packages.pandas
+   python38Packages.pip
+   python38Packages.requests
+   python38Packages.beautifulsoup4
+   python38Packages.numpy
+   python38Packages.scipy
+   python38Packages.nltk
+   python38Packages.spacy
+   
+ 
+   unstable.pulseaudio
+   unstable.sof-firmware
 ];
 
   # Some programs need SUID wrappers, can be configured further or are
