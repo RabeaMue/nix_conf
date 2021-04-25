@@ -63,6 +63,22 @@ in {
   #   keyMap = "us";
   # };
 
+  # enable zsh
+
+  
+  programs.zsh.ohMyZsh = {
+    enable = true;
+    plugins = [ "git" "python" "man" ];
+    theme = "dst";
+  };
+
+    users.extraUsers.adisbladis = {
+      shell = pkgs.zsh;
+    };
+
+    
+  programs.zsh.enable = true;
+
   # Enable the GNOME 3 Desktop Environment.
   # services.xserver.enable = true;
   # services.xserver.displayManager.gdm.enable = true;
@@ -113,6 +129,7 @@ in {
   # enable unfree packages
     nixpkgs.config.allowUnfree = true;
 
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
    environment.systemPackages = with pkgs; [
@@ -121,9 +138,44 @@ in {
    firefox
    chromium
 
+
    emacs
    wget vim 
 
+   tmux
+   htop
+   openconnect
+   zsh
+
+   lxrandr
+   baobab
+   bzip2
+   ffmpeg-full
+   pavucontrol
+   pamixer
+   pdfgrep
+   procmail
+   rdesktop
+   redshift
+   reiserfsprogs
+   unstable.restic
+   unstable.obs-studio
+
+   feh
+   flac
+   gnome3.gedit
+   imagemagick
+   lame
+   mosh
+   mutt
+   msmtp
+   isync
+   mpv
+   mlt
+   notmuch
+   gparted
+   pdfgrep
+   
 
    gparted
     
@@ -138,8 +190,7 @@ in {
    python38
    python38Packages.python-gitlab
    python38Packages.jupyter
-   python38Packages.jupyter_core
-   jupyter
+   python38Packages.jupyter_core 
    python38Packages.pandas
    python38Packages.pip
    python38Packages.requests
@@ -149,9 +200,19 @@ in {
    python38Packages.nltk
    python38Packages.spacy
    
- 
+   conda
+   spyder
+   jupyter
+
+   pandoc
+
+   
    unstable.pulseaudio
    unstable.sof-firmware
+
+   ponysay
+   cowsay
+
 ];
 
   # Some programs need SUID wrappers, can be configured further or are
